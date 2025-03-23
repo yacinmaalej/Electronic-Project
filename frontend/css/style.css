@@ -898,6 +898,12 @@ textarea.input {
   color: #FFF;
 }
 
+.products-slick {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
 .product .product-body {
   position: relative;
   padding: 15px;
