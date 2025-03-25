@@ -899,10 +899,14 @@ textarea.input {
 }
 
 .products-slick {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
 }
+
+
+
 
 .product .product-body {
   position: relative;
@@ -1176,7 +1180,7 @@ textarea.input {
   height: 0;
   opacity: 0;
   visibility: hidden;
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
   padding-bottom: 60px;
   margin-bottom: -60px;
 }
@@ -2194,3 +2198,5 @@ textarea.input {
     margin-top: 10px;
   }
 }
+
+
