@@ -1,16 +1,22 @@
 <?php
-// connexion.php (Connexion à la base de données avec PDO et MySQLi)
+class Connexion {
+    private $pdo;
 
-session_start();
-$mysqli = new mysqli("localhost", "root", "", "boutique");
-if ($mysqli->connect_error) {
-    die("Échec de connexion MySQLi: " . $mysqli->connect_error);
-}
+    public function __construct() {
+        session_start(); // Start session
 
-try { 
-    $pdo = new PDO("mysql:host=localhost;dbname=boutique", "root", "");
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Échec de connexion PDO: " . $e->getMessage());
+        // PDO Connection
+        try {
+            $this->pdo = new PDO("mysql:host=localhost;dbname=boutique", "root", "");
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            die("Échec de connexion PDO: " . $e->getMessage());
+        }
+    }
+
+    // Return PDO connection
+    public function CNXpdo() {
+        return $this->pdo;
+    }
 }
 ?>
