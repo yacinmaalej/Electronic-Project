@@ -8,7 +8,6 @@ $res= $us->listUsers();
 <table border="1">
     <tr>
         <td>Nom</td>
-        <td>Nom</td>
         <td>email</td>
         <td>password</td>
         <td>modifier</td>
@@ -20,11 +19,11 @@ $res= $us->listUsers();
 foreach($res as $row)
 {
     echo "<tr>";
-    echo "<td>".$row['user_nom']."</td>";
-    echo "<td>".$row['user_email']."</td>";
-    echo "<td>".$row['user_password']."</td>";
-    echo "<td><a href='modifier.php?id=".$row['user_id']."'>Modifier</a></td>";
-    echo "<td><a href='supprimer.php?id=".$row['user_id']."'>Supprimer</a></td>";
+    echo "<td>".$row['nom']."</td>";
+    echo "<td>".$row['email']."</td>";
+    echo "<td>".$row['password']."</td>";
+    echo "<td><a href='modifier.php?id=".$row['id']."'>Modifier</a></td>";
+    echo "<td><a href='supprimer.php?id=".$row['id']."'>Supprimer</a></td>";
 }
 
 

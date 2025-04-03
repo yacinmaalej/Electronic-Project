@@ -1,11 +1,9 @@
 <?php
-
 class Utilisateur {
     public $id;
     public $nom;
     public $email;
     public $password;
-
 
     // Function to insert a user into the database
     public function insertUser() {
@@ -13,11 +11,11 @@ class Utilisateur {
         $cnx = new Connexion();
         $pdo = $cnx->CNXpdo();
     
-        // Use a prepared statement
-        $sql = "INSERT INTO utilisateur (user_nom, user_email, user_password) VALUES ($this->id,$this->nom, $this->email, $this->password)";
+        // Use a prepared statement with placeholders
+        $sql = "INSERT INTO users (id, nom, email, password) VALUES (:id, :nom, :email, :password)";
         $stmt = $pdo->prepare($sql);
         
-        // Bind parameters to prevent SQL injection
+        // Bind parameters
         $stmt->bindParam(':id', $this->id);
         $stmt->bindParam(':nom', $this->nom);
         $stmt->bindParam(':email', $this->email);
@@ -29,25 +27,30 @@ class Utilisateur {
             print_r($stmt->errorInfo());
         }
     }
-    function recherche_user(){
+
+    // Recherche User function
+    function recherche_user() {
         require_once('config.php');
         $cnx = new Connexion();
         $pdo = $cnx->CNXpdo();
     
-        $sql = "SELECT count(*) FROM utilisateur WHERE user_nom ='$this->id'";
+        // Corrected SQL Query
+        $sql = "SELECT count(*) FROM users WHERE id = :id";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':nom', $this->id);
+        $stmt->bindParam(':id', $this->id);
         $stmt->execute();
     
         $count = $stmt->fetchColumn(); // Fetch the count value
         return $count;
     }
+
+    // List Users
     function listUsers() {
         require_once('config.php');
         $cnx = new Connexion();
         $pdo = $cnx->CNXpdo();
     
-        $req = "SELECT * FROM utilisateur";
+        $req = "SELECT * FROM users";
     
         try {
             $res = $pdo->query($req);
@@ -56,7 +59,5 @@ class Utilisateur {
             die("Query failed: " . $e->getMessage());
         }
     }
-    
 }
-
 ?>
