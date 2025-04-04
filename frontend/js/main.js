@@ -65,3 +65,49 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
+
+//===============================Product list =============================
+
+function loadProducts() {
+    let category = document.querySelector('input[name="category"]:checked')?.value || '';
+    let brand = document.querySelector('input[name="brand"]:checked')?.value || '';
+    let minPrice = document.getElementById("price-min").value || 0;
+    let maxPrice = document.getElementById("price-max").value || 10000;
+
+    fetch(`list_products.php?category=${category}&brand=${brand}&minPrice=${minPrice}&maxPrice=${maxPrice}`)
+        .then(response => response.json())
+        .then(products => {
+            let productContainer = document.getElementById("product-list");
+            productContainer.innerHTML = "";
+
+            products.forEach(product => {
+                productContainer.innerHTML += `
+                    <div class="col-md-4 col-xs-6">
+                        <div class="product">
+                            <div class="product-img">
+                                <img src="${product.image}" alt="">
+                            </div>
+                            <div class="product-body">
+                                <p class="product-category">${product.category}</p>
+                                <h3 class="product-name"><a href="#">${product.name}</a></h3>
+                                <h4 class="product-price">$${product.price}</h4>
+                            </div>
+                            <div class="add-to-cart">
+                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+        });
+}
+
+// Attach event listeners to filters
+document.querySelectorAll(".checkbox-filter input").forEach(input => {
+    input.addEventListener("change", loadProducts);
+});
+document.getElementById("price-min").addEventListener("change", loadProducts);
+document.getElementById("price-max").addEventListener("change", loadProducts);
+
+window.onload = loadProducts;
+
+
