@@ -88,65 +88,107 @@ document.addEventListener('DOMContentLoaded', function() {
 
 //======= New Products Section =========
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Sélection des éléments
-    const productsContainer = document.querySelector('.products-slick');
-    const products = Array.from(document.querySelectorAll('.products-slick .product'));
-    const navContainer = document.getElementById('slick-nav-1');
+// document.addEventListener('DOMContentLoaded', function() {
+//     // Sélection des éléments
+//     const productsContainer = document.querySelector('.products-slick');
+//     const products = Array.from(document.querySelectorAll('.products-slick .product'));
+//     const navContainer = document.getElementById('slick-nav-1');
     
-    // Configuration
-    const visibleCount = 4;
-    let currentPosition = 0;
-    const productWidth = 100; // 25% pour 4 produits visibles
+//     // Configuration
+//     const visibleCount = 4;
+//     let currentPosition = 0;
+//     const productWidth = 100; // 25% pour 4 produits visibles
     
-    // Vérifier et créer les boutons si nécessaire
-    if (!navContainer.querySelector('.slick-prev')) {
-        navContainer.innerHTML = `
-            <button class="slick-prev"><i class="fa fa-chevron-left"></i></button>
-            <button class="slick-next"><i class="fa fa-chevron-right"></i></button>
-        `;
-    }
+//     // Vérifier et créer les boutons si nécessaire
+//     // if (!navContainer.querySelector('.slick-prev')) {
+//         navContainer.innerHTML = `
+//             <button class="slick-prev"><i class="fa fa-chevron-left"></i></button>
+//             <button class="slick-next"><i class="fa fa-chevron-right"></i></button>
+//         `;
+//     // }
     
-    // Initialiser le style des produits
-    products.forEach((product, index) => {
-        product.style.flex = `0 0 ${productWidth}%`;
-        product.style.maxWidth = `${productWidth}%`;
-    });
+//     // Initialiser le style des produits
+//     products.forEach((product, index) => {
+//         product.style.flex = `0 0 ${productWidth}%`;
+//         product.style.maxWidth = `${productWidth}%`;
+//     });
     
-    // Fonction de mise à jour
-    function updateCarousel() {
-        const offset = -currentPosition * (100 / visibleCount);
-        productsContainer.style.transform = `translateX(${offset}%)`;
+//     // Fonction de mise à jour
+//     function updateCarousel() {
+//         const offset = -currentPosition * (100 / visibleCount);
+//         productsContainer.style.transform = `translateX(${offset}%)`;
         
-        // Gestion des boutons
-        const prevBtn = navContainer.querySelector('.slick-prev');
-        const nextBtn = navContainer.querySelector('.slick-next');
-        prevBtn.disabled = currentPosition === 0;
-        nextBtn.disabled = currentPosition >= products.length - visibleCount;
-    }
+//         // Gestion des boutons
+//         const prevBtn = navContainer.querySelector('.slick-prev');
+//         const nextBtn = navContainer.querySelector('.slick-next');
+//         prevBtn.disabled = currentPosition === 0;
+//         nextBtn.disabled = currentPosition >= products.length - visibleCount;
+//     }
     
-    // Événements de navigation
-    navContainer.querySelector('.slick-prev').addEventListener('click', () => {
-        if (currentPosition > 0) {
-            currentPosition--;
-            updateCarousel();
-        }
-    });
+//     // Événements de navigation
+//     navContainer.querySelector('.slick-prev').addEventListener('click', () => {
+//         if (currentPosition > 0) {
+//             currentPosition--;
+//             updateCarousel();
+//         }
+//     });
     
-    navContainer.querySelector('.slick-next').addEventListener('click', () => {
-        if (currentPosition < products.length - visibleCount) {
-            currentPosition++;
-            updateCarousel();
-        }
-    });
+//     navContainer.querySelector('.slick-next').addEventListener('click', () => {
+//         if (currentPosition < products.length - visibleCount) {
+//             currentPosition++;
+//             updateCarousel();
+//         }
+//     });
     
-    // Initialisation
-    productsContainer.style.display = 'flex';
-    productsContainer.style.transition = 'transform 0.5s ease';
-    productsContainer.style.width = `${(products.length / visibleCount) * 100}%`;
-    updateCarousel();
-});
+//     // Initialisation
+//     productsContainer.style.display = 'flex';
+//     productsContainer.style.transition = 'transform 0.5s ease';
+//     productsContainer.style.width = `${(products.length / visibleCount) * 100}%`;
+//     updateCarousel();
+// });
 //======= New Products Section =========
+
+document.addEventListener('DOMContentLoaded', function () {
+    const tabLinks = document.querySelectorAll('.section-tab-nav a');
+    const productContainer = document.querySelector('#tab2 .products-slick');
+
+    function loadProducts(category = 'all') {
+        // Load products based on the category
+        const url = 'product_section.php?category=' + category;
+
+        fetch(url)
+            .then(res => res.text())
+            .then(html => {
+                productContainer.innerHTML = html;
+
+                // Set active class if match found
+                tabLinks.forEach(link => {
+                    const linkCategory = link.getAttribute('data-category');
+                    if (linkCategory === category) {
+                        link.parentElement.classList.add('active');
+                    } else {
+                        link.parentElement.classList.remove('active');
+                    }
+                });
+            })
+            .catch(err => console.error('Fetch error:', err));
+    }
+
+    // Handle tab clicks
+    tabLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const category = this.getAttribute('data-category');
+            loadProducts(category);
+        });
+    });
+
+    // Load the default category (change 'laptops' to 'all' if needed)
+    loadProducts('all');
+});
+
+
+
 
 //======================================= End index page ================
 

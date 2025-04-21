@@ -856,7 +856,7 @@ textarea.input {
 
 .product {
   position: relative;
-  margin: 15px 0px;
+  margin: 30px 0px;
   -webkit-box-shadow: 0px 0px 0px 0px #E4E7ED, 0px 0px 0px 1px #E4E7ED;
   box-shadow: 0px 0px 0px 0px #E4E7ED, 0px 0px 0px 1px #E4E7ED;
   -webkit-transition: 0.2s all;
@@ -869,12 +869,22 @@ textarea.input {
 }
 
 .product .product-img {
-  position: relative;
+  width: 250px; /* or any fixed width you want */
+  height: 200px; /* or any fixed height you want */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  object-fit: contain;
 }
 
 .product .product-img>img {
-  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
+
+
 
 .product .product-img .product-label {
   position: absolute;
@@ -912,10 +922,11 @@ textarea.input {
 
 .product .product-body {
   position: relative;
-  padding: 15px;
   background-color: #FFF;
   text-align: center;
   z-index: 20;
+  min-height: 200px;
+
 }
 
 .product .product-body .product-category {
@@ -927,10 +938,14 @@ textarea.input {
 .product .product-body .product-name {
   text-transform: uppercase;
   font-size: 14px;
+  min-height: 50px;
+
 }
 
 .product .product-body .product-name>a {
   font-weight: 700;
+ 
+
 }
 
 .product .product-body .product-name>a:hover, .product .product-body .product-name>a:focus {
