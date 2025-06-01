@@ -1,8 +1,8 @@
 <?php
-require_once('config.php');
+require_once('../config.php');
 
 $cnx = new Connexion();
-$pdo = $cnx->CNXpdo();
+$pdo = $cnx->CNXbase();
 
 // Vérifier si un ID est fourni
 if (!isset($_GET['id'])) {
@@ -39,14 +39,18 @@ if (!$product) {
     <label>Name of the Product :</label>
     <input type="text" name="name" value="<?= htmlspecialchars($product['name']) ?>" required><br>
 
+    <label>brand of the Product :</label>
+    <input type="text" name="brand" value="<?= htmlspecialchars($product['brand']) ?>" required><br>
+
+
+
     <label>Description :</label>
     <textarea name="description"><?= htmlspecialchars($product['description']) ?></textarea><br>
 
     <label>Price :</label>
     <input type="number" step="0.01" name="price" value="<?= $product['price'] ?>" required><br>
 
-    <label>Image (URL) :</label>
-    <input type="text" name="image" value="<?= $product['image'] ?>"><br>
+    
 
     <label>Category :</label>
     <select name="category">
@@ -57,6 +61,9 @@ if (!$product) {
 
     <label>Stock :</label>
     <input type="number" name="stock" value="<?= $product['stock'] ?>"><br>
+
+    <label>Image (URL) :</label>
+    <input type="text" name="image" value="<?= $product['image'] ?>"><br>
 
     <button type="submit">Modifier</button>
 </form>

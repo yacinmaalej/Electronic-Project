@@ -1,7 +1,7 @@
 <?php
 require_once("../Backend/config.php");
 $cnx = new Connexion();
-$pdo = $cnx->CNXpdo();
+$pdo = $cnx->CNXbase();
 
 $category = isset($_GET['category']) ? $_GET['category'] : 'all';
 

@@ -1,22 +1,21 @@
 <?php
 class Connexion {
-    private $pdo;
 
-    public function __construct() {
-        session_start(); // Start session
+    public function CNXbase() {
 
-        // PDO Connection
+        $host = 'localhost';
+        $dbname = 'boutique';
+        $username = 'root';
+        $password = '';
+
         try {
-            $this->pdo = new PDO("mysql:host=localhost;dbname=boutique", "root", "");
-            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+            return $pdo;
         } catch (PDOException $e) {
-            die("Échec de connexion PDO: " . $e->getMessage());
+            echo "Connection failed: " . $e->getMessage();
+            exit();
         }
-    }
 
-    // Return PDO connection
-    public function CNXpdo() {
-        return $this->pdo;
     }
 }
 ?>
