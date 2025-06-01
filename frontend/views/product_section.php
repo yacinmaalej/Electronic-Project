@@ -1,5 +1,5 @@
 <?php
-require_once("../Backend/config.php");
+require_once("../../Backend/config.php");
 $cnx = new Connexion();
 $pdo = $cnx->CNXpdo();
 
@@ -19,7 +19,7 @@ $topProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 foreach ($topProducts as $row): ?>
     <div class="product">
         <div class="product-img">
-            <img src="<?= htmlspecialchars($row['image']) ?>" alt="<?= htmlspecialchars($row['name']) ?>">
+            <img src="../<?= htmlspecialchars($row['image']) ?>" alt="<?= htmlspecialchars($row['name']) ?>">
             <div class="product-label">
                 <span class="sale">-30%</span>
                 <span class="new">NEW</span>
