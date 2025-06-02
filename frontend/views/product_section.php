@@ -43,6 +43,18 @@ foreach ($topProducts as $row):
                 <i class="fa fa-star-o"></i>
             </div>
             <div class="product-btns">
+
+                <?php
+								// Check if the user is logged in and is an admin
+								 if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') {
+                    echo "<a href='../../Backend/products/edit_product.php?id=" . htmlspecialchars($row['id']) . "' class='btn btn-edit'>
+                            <i class='fa fa-edit'></i><span class='tooltipp'></span>
+                          </a>";
+                          echo "<a href='../../Backend/products/traitement_supprimer_produit.php?id=" . htmlspecialchars($row['id']) . "' class='btn btn-edit'>
+                            <i class='fa fa-trash'></i><span class='tooltipp'></span>
+                          </a>";
+                }
+						?>
                 <button class="add-to-wishlist" data-product-id="<?= $row['id'] ?>">
                     <i class="fa <?= $isFavorited ? 'fa-heart' : 'fa-heart-o' ?>"></i><span class="tooltipp">add to wishlist</span>
                 </button>                
@@ -52,14 +64,6 @@ foreach ($topProducts as $row):
         <div class="add-to-cart">
             <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
         </div>
-
-         <div class="product-actions">
-            <a href="edit_product.php?id=<?= $row['id'] ?>" class="btn btn-edit">Edit</a>
-            <a href="delete_product.php?id=<?= $row['id'] ?>" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
-        </div>
     </div>
 <?php endforeach; ?>
 
-<div class="add-new-product">
-    <a href="insert_product.php" class="btn btn-add">Add New Product</a>
-</div>

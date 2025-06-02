@@ -32,10 +32,14 @@ $brandsStmt = $pdo->query("SELECT DISTINCT brand FROM products ORDER BY brand AS
                 <!-- products -->
                 <div class="col-md-12">
                     <div class="row">
+                        <div class="add-new-product">
+                                    <a href="../../Backend/products/insert_product.php" class="btn btn-primary">Add New Product</a>
+                                </div>
                         <div class="products-tabs">
                             <div id="tab2" class="tab-pane fade in active">
                                 <div class="products-slick" id="products-list" ></div>
                                 <div id="slick-nav-2" class="products-slick-nav"></div>
+                                
                             </div>
                         </div>
                     </div>

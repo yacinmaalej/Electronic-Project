@@ -17,7 +17,7 @@ try {
 
     // Call the delete method
     if ($produit->supprimerProduct($id)) {
-        header("Location: list_products.php?message=Product deleted successfully");
+        header("Location: ../../frontend/views/store.php?message=Product deleted successfully");
         exit;
     } else {
         echo "Failed to delete the product.";

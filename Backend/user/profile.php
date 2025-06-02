@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php require_once '../../frontend/public/header.php'; ?>
 <div class="section">
 <div class="container mt-5">
-    <?php echo" <h2>Welcome to your profile". htmlspecialchars($user['nom']) ."!</h2>" ?>
+    <?php echo" <h2>Welcome to your profile ". htmlspecialchars($user['nom']) ."!</h2>" ?>
     <form method="POST" action="">
         <input type="hidden" name="id" value="<?php echo htmlspecialchars($user['id']); ?>">
         <div class="form-group">
