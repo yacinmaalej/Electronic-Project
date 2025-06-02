@@ -52,5 +52,14 @@ foreach ($topProducts as $row):
         <div class="add-to-cart">
             <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
         </div>
+
+         <div class="product-actions">
+            <a href="edit_product.php?id=<?= $row['id'] ?>" class="btn btn-edit">Edit</a>
+            <a href="delete_product.php?id=<?= $row['id'] ?>" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
+        </div>
     </div>
 <?php endforeach; ?>
+
+<div class="add-new-product">
+    <a href="insert_product.php" class="btn btn-add">Add New Product</a>
+</div>

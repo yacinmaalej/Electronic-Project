@@ -42,8 +42,6 @@ if (!$product) {
     <label>brand of the Product :</label>
     <input type="text" name="brand" value="<?= htmlspecialchars($product['brand']) ?>" required><br>
 
-
-
     <label>Description :</label>
     <textarea name="description"><?= htmlspecialchars($product['description']) ?></textarea><br>
 

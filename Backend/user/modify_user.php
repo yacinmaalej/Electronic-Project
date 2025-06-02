@@ -56,6 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <?php require_once('../../frontend/public/header.php'); ?>
+<div class="section">
 <div class="container mt-5">
     <h2>Modify User</h2>
     <form method="POST" action="">
@@ -102,5 +103,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit" class="btn btn-success">Update User</button>
     </form>
 </div>
-
+</div>
 <?php require_once('../../frontend/public/footer.php'); ?>

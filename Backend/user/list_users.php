@@ -19,6 +19,7 @@ $users = $utilisateur->listUsers();
 ?>
 
 <?php require_once('../../frontend/public/header.php'); ?>
+<div class="section">
 <div class="container mt-5">
     <h2>User List</h2>
     <table class="table">
@@ -51,5 +52,5 @@ $users = $utilisateur->listUsers();
     </table>
     <a href="add_user.php" class="btn btn-primary">Add User</a>
 </div>
-
+</div>
 <?php require_once('../../frontend/public/footer.php'); ?>

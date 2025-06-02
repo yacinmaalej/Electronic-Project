@@ -1,3 +1,21 @@
+//===============================Header catégories =============================
+
+document.getElementById('category-search-form').addEventListener('submit', function(e) {
+    e.preventDefault(); // Prevent the default form submission
+
+    const categoryId = document.getElementById('category-select').value;
+    const searchQuery = document.querySelector('.header-search .input').value; // Get the search query if needed
+
+    // Redirect to store.php with the selected category
+    if (categoryId !== "0") {
+        window.location.href = `store.php?category=${categoryId}&search=${encodeURIComponent(searchQuery)}`;
+    } else {
+        // Redirect to store.php without category filtering
+        window.location.href = `store.php?search=${encodeURIComponent(searchQuery)}`;
+    }
+});
+//===============================End Header catégories =============================
+
 //===============================Your cart drop down list =============================
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -327,6 +345,10 @@ function fetchAndUpdateWishlistCount() {
 document.addEventListener('DOMContentLoaded', function () {
     fetchAndUpdateWishlistCount();
 });
+
+//===============================Store page product list =============================
+
+
 
 //===============================End Product list =============================
 

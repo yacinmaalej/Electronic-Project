@@ -1,4 +1,3 @@
-
 <?php
 $wishlistCount = 0;
 if (isset($_SESSION['user_id'])) {
@@ -77,17 +76,18 @@ if (isset($_SESSION['user_id'])) {
 
 						<!-- SEARCH BAR -->
 						<div class="col-md-6">
-							<div class="header-search">
-								<form>
-									<select class="input-select">
-										<option value="0">All Categories</option>
-										<option value="1">Category 01</option>
-										<option value="1">Category 02</option>
-									</select>
-									<input class="input" placeholder="Search here">
-									<button class="search-btn">Search</button>
-								</form>
-							</div>
+						<div class="header-search">
+							<form id="category-search-form">
+								<select class="input-select" id="category-select">
+									<option value="0">All Categories</option>
+									<?php foreach ($categories as $category): ?>
+										<option value="<?= htmlspecialchars($category['id']) ?>"><?= htmlspecialchars($category['name']) ?></option>
+									<?php endforeach; ?>
+								</select>
+								<input class="input" placeholder="Search here">
+								<button type="submit" class="search-btn">Search</button>
+							</form>
+						</div>
 						</div>
 						<!-- /SEARCH BAR -->
 
@@ -156,10 +156,7 @@ if (isset($_SESSION['user_id'])) {
 					<!-- NAV -->
 					<ul class="main-nav nav navbar-nav">
 						<li class="active"><a href="/Electronic-Project/frontend/views/index.php">Home</a></li>
-						<li><a href="/Electronic-Project/frontend/views/store.php">Categories</a></li>
-						<li><a href="/Electronic-Project/frontend/views/store.php">Laptops</a></li>
-						<li><a href="/Electronic-Project/frontend/views/store.php">Smartphones</a></li>
-						<li><a href="/Electronic-Project/frontend/views/store.php">Accessories</a></li>
+						<li><a href="/Electronic-Project/frontend/views/store.php">Products</a></li>
 						<li><a href="/Electronic-Project/frontend/views/contact.php">Contact</a></li>
 						 <?php
 								// Check if the user is logged in and is an admin
@@ -177,3 +174,4 @@ if (isset($_SESSION['user_id'])) {
 			<!-- /container -->
 		</nav>
 		<!-- /NAVIGATION -->
+
