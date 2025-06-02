@@ -1,6 +1,6 @@
 <?php
-require_once 'header.php';
-require_once '../../Backend/config.php';
+require_once('../../Backend/verify_session.php');
+require_once '../public/header.php';
 ?>
 		<!-- BREADCRUMB -->
 		<div id="breadcrumb" class="section">
@@ -539,6 +539,6 @@ require_once '../../Backend/config.php';
 		</div>
 		<!-- /NEWSLETTER -->
 
-		<?php require_once 'footer.php';?>
+		<?php require_once '../public/footer.php';?>
 	</body>
 </html>

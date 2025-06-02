@@ -1,5 +1,7 @@
 <?php
-require_once 'header.php';
+require_once('../../Backend/verify_session.php');
+require_once '../public/header.php';
+
 ?>
 		<!-- SECTION -->
 		<div class="section">
@@ -139,7 +141,7 @@ require_once 'header.php';
 							</ul>
 							<h2 class="text-uppercase">hot deal this week</h2>
 							<p>New Collection Up to 50% OFF</p>
-							<a class="primary-btn cta-btn" href="#">Shop now</a>
+							<a class="primary-btn cta-btn" 	href="store.php">Shop now</a>
 						</div>
 					</div>
 				</div>
@@ -186,6 +188,6 @@ require_once 'header.php';
 		</div>
 		<!-- /NEWSLETTER -->
 		
-		<?php require_once 'footer.php';?>
+		<?php require_once '../public/footer.php';?>
 	</body>
 </html>

@@ -12,7 +12,7 @@ if ($us->id && $us->nom && $us->email && $us->password) {
     $n = $us->recherche_user();
     if ($n == 0) {
         $us->insertUser();
-        header('location: index.php');
+        header('location: ../frontend/views/index.php');
     } else {
         header('location: register.php'); 
     }

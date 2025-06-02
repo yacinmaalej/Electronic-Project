@@ -1,5 +1,5 @@
 <?php
-require_once("../../Backend/config.php");
+require_once('../../Backend/verify_session.php');
 $cnx = new Connexion();
 $pdo = $cnx->CNXbase();
 
@@ -14,9 +14,15 @@ if ($category !== 'all') {
 
 $stmt->execute();
 $topProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$userId = $_SESSION['user_id'];
 
 
-foreach ($topProducts as $row): ?>
+foreach ($topProducts as $row): 
+    $isFavorited = false;
+    $check = $pdo->prepare("SELECT 1 FROM wishlist WHERE user_id = ? AND product_id = ?");
+    $check->execute([$userId, $row['id']]);
+    $isFavorited = $check->fetchColumn() > 0;
+?>
     <div class="product">
         <div class="product-img">
             <img src="../<?= htmlspecialchars($row['image']) ?>" alt="<?= htmlspecialchars($row['name']) ?>">
@@ -37,7 +43,9 @@ foreach ($topProducts as $row): ?>
                 <i class="fa fa-star-o"></i>
             </div>
             <div class="product-btns">
-                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                <button class="add-to-wishlist" data-product-id="<?= $row['id'] ?>">
+                    <i class="fa <?= $isFavorited ? 'fa-heart' : 'fa-heart-o' ?>"></i><span class="tooltipp">add to wishlist</span>
+                </button>                
                 <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
                 <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
             </div>

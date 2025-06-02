@@ -15,8 +15,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Données du panier (exemple)
     const cartItems = [
-        { id: 1, name: "product name goes here", price: 980.00, quantity: 1, img: "./img/product01.png" },
-        { id: 2, name: "product name goes here", price: 980.00, quantity: 3, img: "./img/product02.png" }
+        { id: 1, name: "product name goes here", price: 980.00, quantity: 1, img: "/Electronic-Project/frontend/img/product01.png" },
+        { id: 2, name: "product name goes here", price: 980.00, quantity: 3, img: "/Electronic-Project/frontend/img/product02.png" }
     ];
 
     // Afficher/masquer le dropdown
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function loadProducts(category = 'all') {
         // Load products based on the category
-        const url = 'product_section.php?category=' + category;
+        const url = '/Electronic-Project/frontend/views/product_section.php?category=' + category;
 
         fetch(url)
             .then(res => res.text())
@@ -263,6 +263,70 @@ function isProductPage() {
         // Chargement initial
         window.addEventListener('load', loadProducts);
     }
+
+
+// Fonction pour gérer les wichlist    
+
+
+document.addEventListener('click', function (e) {
+    const btn = e.target.closest('.add-to-wishlist');
+    if (!btn) return;
+    
+    const productId = btn.dataset.productId;
+    const icon = btn.querySelector('i');
+
+    fetch('/Electronic-Project/Backend/products/toggle_wishlist.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'product_id=' + encodeURIComponent(productId)
+    })
+    .then(response => response.json())
+    .then(data => {
+    if (data.success) {
+        icon.classList.toggle('fa-heart');
+        icon.classList.toggle('fa-heart-o');
+
+        // Mise à jour du compteur
+        if (data.action === 'added') {
+            updateWishlistCount(1);
+        } else if (data.action === 'removed') {
+            updateWishlistCount(-1);
+        }
+    } else {
+        alert(data.message || 'Login required');
+    }
+})
+
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error processing wishlist');
+    });
+});
+
+// mettre à jour dynamiquement #wishlist-count après chaque clic
+function updateWishlistCount(change) {
+    const countElem = document.getElementById('wishlist-count');
+    if (!countElem) return;
+    let count = parseInt(countElem.textContent) || 0;
+    count += change;
+    countElem.textContent = count < 0 ? 0 : count;
+}
+
+function fetchAndUpdateWishlistCount() {
+    fetch('/Electronic-Project/Backend/products/get_count.php')
+        .then(res => res.json())
+        .then(data => {
+            const countElem = document.getElementById('wishlist-count');
+            if (countElem) {
+                countElem.textContent = data.count;
+            }
+        })
+        .catch(err => console.error('Error loading wishlist count:', err));
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    fetchAndUpdateWishlistCount();
+});
 
 //===============================End Product list =============================
 

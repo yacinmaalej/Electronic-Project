@@ -1,6 +1,6 @@
 <?php
-require_once 'header.php';
-require_once '../../Backend/config.php';
+require_once('../../Backend/verify_session.php');
+require_once '../public/header.php';
 ?>
 		<!-- BREADCRUMB -->
 		<div id="breadcrumb" class="section">
@@ -88,10 +88,7 @@ require_once '../../Backend/config.php';
 								</label>
 								<div class="caption">
 									<div class="form-group">
-										<input class="input" type="text" name="first-name" placeholder="First Name">
-									</div>
-									<div class="form-group">
-										<input class="input" type="text" name="last-name" placeholder="Last Name">
+										<input class="input" type="text" name="nom" placeholder="Your Name">
 									</div>
 									<div class="form-group">
 										<input class="input" type="email" name="email" placeholder="Email">
@@ -237,7 +234,7 @@ require_once '../../Backend/config.php';
 		</div>
 		<!-- /NEWSLETTER -->
 
-		<?php require_once 'footer.php';?>
+		<?php require_once '../public/footer.php';?>
 
 	</body>
 </html>
