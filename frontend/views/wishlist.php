@@ -1,7 +1,7 @@
 <?php
 require_once('../../Backend/verify_session.php');
 require_once '../public/header.php';
-$pdo = (new Connexion())->CNXpdo();
+$pdo = (new Connexion())->CNXbase();
 
 $userId = $_SESSION['user_id'];
 

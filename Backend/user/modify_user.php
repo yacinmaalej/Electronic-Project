@@ -20,7 +20,7 @@ if (isset($_GET['id'])) {
         exit();
     }
     $cnx = new Connexion();
-    $pdo = $cnx->CNXpdo();
+    $pdo = $cnx->CNXbase();
     // Fetch user details
     $stmt = $pdo->prepare("SELECT * FROM users WHERE id = :id");
     $stmt->bindParam(':id', $utilisateur->id);

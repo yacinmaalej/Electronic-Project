@@ -4,7 +4,7 @@ require_once '../../frontend/public/header.php';
 require_once('user.class.php');
 if (isset($_SESSION['user_id'])) {
     $userId = $_SESSION['user_id'];
-    $userName = $_SESSION['user_name'];
+    $userName = $_SESSION['user_nom'];
 } else {
     $userId = null;
     $userName = null;
@@ -24,7 +24,7 @@ if (isset($_GET['id'])) {
         exit();
     }
     $cnx = new Connexion();
-    $pdo = $cnx->CNXpdo();
+    $pdo = $cnx->CNXbase();
     // Fetch user details
     $stmt = $pdo->prepare("SELECT * FROM users WHERE id = :id");
     $stmt->bindParam(':id', $utilisateur->id);

@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user->password = $_POST['password'];
 
     $cnx = new Connexion();
-    $pdo = $cnx->CNXpdo();
+    $pdo = $cnx->CNXbase();
 
     $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
     $stmt->execute([$user->email]);

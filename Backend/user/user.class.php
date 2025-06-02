@@ -15,7 +15,7 @@ class Utilisateur {
     public function insertUser () {
     require_once('../config.php'); // Include database connection class
     $cnx = new Connexion();
-    $pdo = $cnx->CNXpdo();
+    $pdo = $cnx->CNXbase();
 
     // Hash the password before storing it
     $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
@@ -46,7 +46,7 @@ class Utilisateur {
     public function recherche_user() {
         require_once('../config.php');
         $cnx = new Connexion();
-        $pdo = $cnx->CNXpdo();
+        $pdo = $cnx->CNXbase();
     
         // Corrected SQL Query
         $sql = "SELECT count(*) FROM users WHERE id = :id";
@@ -62,7 +62,7 @@ class Utilisateur {
     public function listUsers() {
         require_once('../config.php');
         $cnx = new Connexion();
-        $pdo = $cnx->CNXpdo();
+        $pdo = $cnx->CNXbase();
     
         $req = "SELECT * FROM users";
     
@@ -78,7 +78,7 @@ class Utilisateur {
     public function delete_user($id) {
         require_once('../config.php');
         $cnx = new Connexion();
-        $pdo = $cnx->CNXpdo();
+        $pdo = $cnx->CNXbase();
     
         $sql = "DELETE FROM users WHERE id = :id";
         $stmt = $pdo->prepare($sql);
@@ -95,7 +95,7 @@ class Utilisateur {
     public function modify_user($id) {
         require_once('../config.php');
         $cnx = new Connexion();
-        $pdo = $cnx->CNXpdo();
+        $pdo = $cnx->CNXbase();
     
         // Prepare the SQL statement
         $sql = "UPDATE users SET nom = :nom, email = :email, password = :password WHERE id = :id";
