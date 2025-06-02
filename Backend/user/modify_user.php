@@ -26,30 +26,31 @@ if (isset($_GET['id'])) {
     $stmt->bindParam(':id', $utilisateur->id);
     $stmt->execute();
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    echo " $user";
 } else {
     echo "User ID not provided!";
     exit();
 }   
 
-// Process the form when submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $utilisateur->id = $_POST['id'];
     $utilisateur->nom = $_POST['name'];
     $utilisateur->email = $_POST['email'];
-    $utilisateur->role = $_POST['role'];
-    $utilisateur->password = $_POST['password'];
-    $utilisateur->address = $_POST['address'] ?? null;
-    $utilisateur->city = $_POST['city'] ?? null;
-    $utilisateur->country = $_POST['country'] ?? null;
-    $utilisateur->zip_code = $_POST['zip_code'] ?? null;
-    $utilisateur->phone = $_POST['phone'] ?? null;
-
-    // Update the user in the database
+    
+    $utilisateur->role = $_POST['role'] ?? $user['role'];
+    // Only update the password if it's provided
+    if (!empty($_POST['password'])) {
+        $utilisateur->password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    } else {
+        $utilisateur->password = $user['password']; // Keep the existing password
+    }    
+    // Preserve existing values for optional fields
+    $utilisateur->address = $_POST['address'] ?? $user['address'];
+    $utilisateur->city = $_POST['city'] ?? $user['city'];
+    $utilisateur->country = $_POST['country'] ?? $user['country'];
+    $utilisateur->zip_code = $_POST['zip_code'] ?? $user['zip_code'];
+    $utilisateur->phone = $_POST['phone'] ?? $user['phone'];
     $utilisateur->modify_user($utilisateur->id);
-
-    // Redirect to the user list after modification
-    header("Location: list_users.php");
+    header("Location: ../../frontend/views/index.php");
     exit();
 }
 ?>

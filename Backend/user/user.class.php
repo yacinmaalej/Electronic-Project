@@ -82,42 +82,56 @@ class Utilisateur {
     
         $sql = "DELETE FROM users WHERE id = :id";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':id', $id);
-    
-        if ($stmt->execute()) {
-            echo "User  deleted successfully!";
-        } else {
-            print_r($stmt->errorInfo());
+            $stmt->bindParam(':id', $id);
+        
+            $stmt->execute();
         }
-    }
+            
 
     // Function to modify a user's details
     public function modify_user($id) {
-        require_once('../config.php');
-        $cnx = new Connexion();
-        $pdo = $cnx->CNXbase();
-    
-        // Prepare the SQL statement
-        $sql = "UPDATE users SET nom = :nom, email = :email, password = :password WHERE id = :id";
-        $stmt = $pdo->prepare($sql);
-        
-        // Hash the password if it's being updated
-        $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
-        
-        $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':nom', $this->nom);
-        $stmt->bindParam(':email', $this->email);
-        $stmt->bindParam(':password', $hashedPassword);
-        $stmt->bindParam(':address', $this->address);
-        $stmt->bindParam(':city', $this->city);
-        $stmt->bindParam(':country', $this->country);
-        $stmt->bindParam(':zip_code', $this->zip_code);
-        $stmt->bindParam(':phone', $this->phone);
-        if ($stmt->execute()) {
-            echo "User  modified successfully!";
-        } else {
-            print_r($stmt->errorInfo());
-        }
+    require_once('../config.php');
+    $cnx = new Connexion();
+    $pdo = $cnx->CNXbase();
+
+    // Prepare the SQL statement
+    $sql = "UPDATE users 
+        SET nom = :nom, 
+            email = :email, 
+            role = :role, 
+            address = :address, 
+            city = :city, 
+            country = :country, 
+            zip_code = :zip_code, 
+            phone = :phone";
+
+    // Only include password in the update if it's provided
+    if (!empty($this->password)) {
+        $sql .= ", password = :password"; // Append password update
     }
+
+    $sql .= " WHERE id = :id"; 
+
+    $stmt = $pdo->prepare($sql);
+    
+    // Bind parameters
+    $stmt->bindParam(':id', $id);
+    $stmt->bindParam(':nom', $this->nom);
+    $stmt->bindParam(':email', $this->email);
+    $stmt->bindParam(':role', $this->role);
+    $stmt->bindParam(':address', $this->address);
+    $stmt->bindParam(':city', $this->city);
+    $stmt->bindParam(':country', $this->country);
+    $stmt->bindParam(':zip_code', $this->zip_code);
+    $stmt->bindParam(':phone', $this->phone);
+
+    // Bind password only if it's provided
+    if (!empty($this->password)) {
+        $stmt->bindParam(':password', $this->password);
+    }
+
+    $stmt->execute();
+}
+
 }
 ?>

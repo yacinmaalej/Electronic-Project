@@ -1,16 +1,11 @@
 <?php
 require_once('../verify_session.php');
-require_once '../../frontend/public/header.php';
 require_once('user.class.php');
-if (isset($_SESSION['user_id'])) {
-    $userId = $_SESSION['user_id'];
-    $userName = $_SESSION['user_nom'];
-} else {
-    $userId = null;
-    $userName = null;
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit;
 }
-    $userId = $_SESSION['user_id'];//retrieved from login page
-    $userName = $_SESSION['user_nom'];
 
 $utilisateur = new Utilisateur();
 
@@ -23,6 +18,7 @@ if (isset($_GET['id'])) {
         echo "User  not found!";
         exit();
     }
+
     $cnx = new Connexion();
     $pdo = $cnx->CNXbase();
     // Fetch user details
@@ -30,40 +26,48 @@ if (isset($_GET['id'])) {
     $stmt->bindParam(':id', $utilisateur->id);
     $stmt->execute();
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
-      echo " $user";
 } else {
-    echo "User ID not provided!";
+    echo "User  ID not provided!";
     exit();
-} 
-
+}
 
 // Process the form when submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $utilisateur->id = $_POST['id'];
     $utilisateur->nom = $_POST['name'];
     $utilisateur->email = $_POST['email'];
-    $utilisateur->role = $_POST['role'];
-    $utilisateur->password = $_POST['password'];
-    $utilisateur->address = $_POST['address'] ?? null;
-    $utilisateur->city = $_POST['city'] ?? null;
-    $utilisateur->country = $_POST['country'] ?? null;
-    $utilisateur->zip_code = $_POST['zip_code'] ?? null;
-    $utilisateur->phone = $_POST['phone'] ?? null;
+    
+    // Preserve the existing role if not changed
+    $utilisateur->role = $_POST['role'] ?? $user['role']; // Keep existing role if not provided
 
+    // Only update the password if it's provided
+    if (!empty($_POST['password'])) {
+        $utilisateur->password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    } else {
+        $utilisateur->password = $user['password']; // Keep the existing password
+    }    
+      
+    // Preserve existing values for optional fields
+    $utilisateur->address = $_POST['address'] ?? $user['address'];
+    $utilisateur->city = $_POST['city'] ?? $user['city'];
+    $utilisateur->country = $_POST['country'] ?? $user['country'];
+    $utilisateur->zip_code = $_POST['zip_code'] ?? $user['zip_code'];
+    $utilisateur->phone = $_POST['phone'] ?? $user['phone'];
+
+    // Update the user in the database
     $utilisateur->modify_user($utilisateur->id);
-
     header("Location: ../../frontend/views/index.php");
     exit();
 }
 ?>
-
+<?php require_once '../../frontend/public/header.php'; ?>
 <div class="container mt-5">
-    <h2>Welcome to your profile!</h2>
+    <?php echo" <h2>Welcome to your profile". htmlspecialchars($user['nom']) ."!</h2>" ?>
     <form method="POST" action="">
         <input type="hidden" name="id" value="<?php echo htmlspecialchars($user['id']); ?>">
         <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" name="name" id="name" class="form-control" value="<?php echo htmlspecialchars($userId); ?>" required>
+            <input type="text" name="name" id="name" class="form-control" value="<?php echo htmlspecialchars($user['nom']); ?>" required>
         </div>
         <div class="form-group">
             <label for="email">Email</label>
@@ -88,6 +92,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="form-group">
             <label for="phone">Phone</label>
             <input type="number" name="phone" class="form-control" value="<?= htmlspecialchars($user['phone'] ?? '') ?>">
+        </div>
+        <div class="form-group">
+            <label for="role">Role</label>
+            <select name="role" id="role" class="form-control">
+                <option value="user" <?php echo ($user['role'] === 'user') ? 'selected' : ''; ?>>User </option>
+                <option value="admin" <?php echo ($user['role'] === 'admin') ? 'selected' : ''; ?>>Admin</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="password">Password</label>

@@ -90,6 +90,7 @@ require_once '../public/header.php';
 									<div class="form-group">
 										<input class="input" type="text" name="nom" placeholder="Your Name">
 									</div>
+									
 									<div class="form-group">
 										<input class="input" type="email" name="email" placeholder="Email">
 									</div>

@@ -8,7 +8,7 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-$pdo = (new Connexion())->CNXpdo();
+$pdo = (new Connexion())->CNXbase();
 $stmt = $pdo->prepare("SELECT COUNT(*) FROM wishlist WHERE user_id = ?");
 $stmt->execute([$_SESSION['user_id']]);
 $count = $stmt->fetchColumn();

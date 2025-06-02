@@ -5,7 +5,6 @@ class Connexion {
     private $username = 'root';
     private $password = '';
     public $pdo;
-
     public function __construct() {
         try {
             $this->pdo = new PDO(
@@ -13,12 +12,12 @@ class Connexion {
                 $this->username,
                 $this->password
             );
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Enable exceptions for errors
         } catch (PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
             exit();
         }
     }
-
     public function CNXbase() {
         return $this->pdo;
     }

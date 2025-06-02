@@ -52,7 +52,7 @@ if (isset($_SESSION['user_id'])) {
 						<li><a href="https://www.google.com/maps/place/Sfax" target="_blank"><i class="fa fa-map-marker"></i> Sfax Tunisia</a></li>
 					</ul>
 					<ul class="header-links pull-right">
-						<li><a href="/Electronic-Project/Backend/user/profile.php?id=<?php echo $user['id']; ?>"><i class="fa fa-user-o"></i> My Account</a></li>
+						<li><a href="/Electronic-Project/Backend/user/profile.php?id=<?php echo $_SESSION["user_id"]; ?>"><i class="fa fa-user-o"></i> My Account</a></li>
                         <li><a href="/Electronic-Project/Backend/user/login.php"><i class="fa fa-sign-out"></i> Logout</a></li>
 					</ul>
 				</div>

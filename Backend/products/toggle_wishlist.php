@@ -13,7 +13,7 @@ $userId = $_SESSION['user_id'];
 $productId = intval($_POST['product_id']);
 
 $cnx = new Connexion();
-$pdo = $cnx->CNXpdo();
+$pdo = $cnx->CNXbase();
 
 // Vérifie si déjà dans la wishlist
 $stmt = $pdo->prepare("SELECT * FROM wishlist WHERE user_id = ? AND product_id = ?");
