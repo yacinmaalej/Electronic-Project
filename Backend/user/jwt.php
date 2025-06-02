@@ -1,10 +1,10 @@
 <?php
-require 'vendor/autoload.php'; // avec firebase/php-jwt via Composer
+require '../../vendor/autoload.php'; // avec firebase/php-jwt via Composer
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
-$secretKey = 'your_secret_key';
+ $secretKey = bin2hex(random_bytes(32)); // Générer une clé secrète aléatoire pour signer les JWT
 
 function generateJWT($userId) {
     global $secretKey;

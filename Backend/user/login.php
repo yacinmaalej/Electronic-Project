@@ -1,4 +1,4 @@
-<?php include 'config.php'; include 'jwt.php'; session_start(); ?>
+<?php include '../config.php'; include 'jwt.php'; ?>
 <form method="POST" action="">
     <input type="text" name="nom" placeholder="Nom" required class="form-control mb-2">
     <input type="email" name="email" placeholder="Email" required class="form-control mb-2">
@@ -7,14 +7,16 @@
 </form>
 
 <?php
+ $cnx = new Connexion();
+ $pdo = $cnx->CNXpdo();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
-    $stmt->execute([$_POST['username']]);
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt->execute([$_POST['email']]);
     $user = $stmt->fetch();
 
     if ($user && password_verify($_POST['password'], $user['password'])) {
         $_SESSION['token'] = generateJWT($user['id']);
-        header("Location: profile.php");
+        header("Location: index.php");
     } else {
         echo "<div class='alert alert-danger'>Invalid credentials!</div>";
     }

@@ -86,67 +86,6 @@ document.addEventListener('DOMContentLoaded', function() {
 //=======================================index page ================
 
 
-//======= New Products Section =========
-
-// document.addEventListener('DOMContentLoaded', function() {
-//     // Sélection des éléments
-//     const productsContainer = document.querySelector('.products-slick');
-//     const products = Array.from(document.querySelectorAll('.products-slick .product'));
-//     const navContainer = document.getElementById('slick-nav-1');
-    
-//     // Configuration
-//     const visibleCount = 4;
-//     let currentPosition = 0;
-//     const productWidth = 100; // 25% pour 4 produits visibles
-    
-//     // Vérifier et créer les boutons si nécessaire
-//     // if (!navContainer.querySelector('.slick-prev')) {
-//         navContainer.innerHTML = `
-//             <button class="slick-prev"><i class="fa fa-chevron-left"></i></button>
-//             <button class="slick-next"><i class="fa fa-chevron-right"></i></button>
-//         `;
-//     // }
-    
-//     // Initialiser le style des produits
-//     products.forEach((product, index) => {
-//         product.style.flex = `0 0 ${productWidth}%`;
-//         product.style.maxWidth = `${productWidth}%`;
-//     });
-    
-//     // Fonction de mise à jour
-//     function updateCarousel() {
-//         const offset = -currentPosition * (100 / visibleCount);
-//         productsContainer.style.transform = `translateX(${offset}%)`;
-        
-//         // Gestion des boutons
-//         const prevBtn = navContainer.querySelector('.slick-prev');
-//         const nextBtn = navContainer.querySelector('.slick-next');
-//         prevBtn.disabled = currentPosition === 0;
-//         nextBtn.disabled = currentPosition >= products.length - visibleCount;
-//     }
-    
-//     // Événements de navigation
-//     navContainer.querySelector('.slick-prev').addEventListener('click', () => {
-//         if (currentPosition > 0) {
-//             currentPosition--;
-//             updateCarousel();
-//         }
-//     });
-    
-//     navContainer.querySelector('.slick-next').addEventListener('click', () => {
-//         if (currentPosition < products.length - visibleCount) {
-//             currentPosition++;
-//             updateCarousel();
-//         }
-//     });
-    
-//     // Initialisation
-//     productsContainer.style.display = 'flex';
-//     productsContainer.style.transition = 'transform 0.5s ease';
-//     productsContainer.style.width = `${(products.length / visibleCount) * 100}%`;
-//     updateCarousel();
-// });
-//======= New Products Section =========
 
 document.addEventListener('DOMContentLoaded', function () {
     const tabLinks = document.querySelectorAll('.section-tab-nav a');
@@ -268,62 +207,62 @@ function isProductPage() {
     return document.getElementById('product-list') !== null;
 }
 
-function loadProducts() {
-    // Ne rien faire si on n'est pas sur la page produit
-    if (!isProductPage()) return;
+    function loadProducts() {
+        // Ne rien faire si on n'est pas sur la page produit
+        if (!isProductPage()) return;
 
-    let category = document.querySelector('input[name="category"]:checked')?.value || '';
-    let brand = document.querySelector('input[name="brand"]:checked')?.value || '';
-    let minPrice = document.getElementById("price-min")?.value || 0;
-    let maxPrice = document.getElementById("price-max")?.value || 10000;
+        let category = document.querySelector('input[name="category"]:checked')?.value || '';
+        let brand = document.querySelector('input[name="brand"]:checked')?.value || '';
+        let minPrice = document.getElementById("price-min")?.value || 0;
+        let maxPrice = document.getElementById("price-max")?.value || 10000;
 
-    fetch(`list_products.php?category=${category}&brand=${brand}&minPrice=${minPrice}&maxPrice=${maxPrice}`)
-        .then(response => response.json())
-        .then(products => {
-            let productContainer = document.getElementById("product-list");
-            if (!productContainer) return;
-            
-            productContainer.innerHTML = "";
+        fetch(`list_products.php?category=${category}&brand=${brand}&minPrice=${minPrice}&maxPrice=${maxPrice}`)
+            .then(response => response.json())
+            .then(products => {
+                let productContainer = document.getElementById("product-list");
+                if (!productContainer) return;
+                
+                productContainer.innerHTML = "";
 
-            products.forEach(product => {
-                productContainer.innerHTML += `
-                    <div class="col-md-4 col-xs-6">
-                        <div class="product">
-                            <div class="product-img">
-                                <img src="${product.image}" alt="">
+                products.forEach(product => {
+                    productContainer.innerHTML += `
+                        <div class="col-md-4 col-xs-6">
+                            <div class="product">
+                                <div class="product-img">
+                                    <img src="${product.image}" alt="">
+                                </div>
+                                <div class="product-body">
+                                    <p class="product-category">${product.category}</p>
+                                    <h3 class="product-name"><a href="#">${product.name}</a></h3>
+                                    <h4 class="product-price">$${product.price}</h4>
+                                </div>
+                                <div class="add-to-cart">
+                                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                                </div>
                             </div>
-                            <div class="product-body">
-                                <p class="product-category">${product.category}</p>
-                                <h3 class="product-name"><a href="#">${product.name}</a></h3>
-                                <h4 class="product-price">$${product.price}</h4>
-                            </div>
-                            <div class="add-to-cart">
-                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Add to cart</button>
-                            </div>
-                        </div>
-                    </div>`;
-            });
-        })
-        .catch(error => console.error('Error loading products:', error));
-}
+                        </div>`;
+                });
+            })
+            .catch(error => console.error('Error loading products:', error));
+    }
 
-// Attacher les événements seulement sur la page produit
-if (isProductPage()) {
-    // Écouteurs pour les filtres
-    document.querySelectorAll(".checkbox-filter input").forEach(input => {
-        input.addEventListener("change", loadProducts);
-    });
+    // Attacher les événements seulement sur la page produit
+    if (isProductPage()) {
+        // Écouteurs pour les filtres
+        document.querySelectorAll(".checkbox-filter input").forEach(input => {
+            input.addEventListener("change", loadProducts);
+        });
 
-    // Écouteurs pour les prix (avec vérification d'existence)
-    const priceMin = document.getElementById("price-min");
-    const priceMax = document.getElementById("price-max");
-    
-    if (priceMin) priceMin.addEventListener("change", loadProducts);
-    if (priceMax) priceMax.addEventListener("change", loadProducts);
+        // Écouteurs pour les prix (avec vérification d'existence)
+        const priceMin = document.getElementById("price-min");
+        const priceMax = document.getElementById("price-max");
+        
+        if (priceMin) priceMin.addEventListener("change", loadProducts);
+        if (priceMax) priceMax.addEventListener("change", loadProducts);
 
-    // Chargement initial
-    window.addEventListener('load', loadProducts);
-}
+        // Chargement initial
+        window.addEventListener('load', loadProducts);
+    }
 
 //===============================End Product list =============================
 

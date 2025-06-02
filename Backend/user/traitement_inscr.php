@@ -12,9 +12,9 @@ if ($us->id && $us->nom && $us->email && $us->password) {
     $n = $us->recherche_user();
     if ($n == 0) {
         $us->insertUser();
-        header('location: liste.php');
+        header('location: index.php');
     } else {
-        header('location: inscription.php'); // Fixed incorrect header syntax
+        header('location: register.php'); 
     }
 } else {
     echo "Error: Missing required fields!";
