@@ -62,8 +62,11 @@ foreach ($topProducts as $row):
             </div>
         </div>
         <div class="add-to-cart">
-            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-        </div>
+    <form action="../../Backend/products/add_to_cart.php" method="POST">
+        <input type="hidden" name="product_id" value="<?= $row['id'] ?>">
+        <button type="submit" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+    </form>
+</div>
     </div>
 <?php endforeach; ?>
 

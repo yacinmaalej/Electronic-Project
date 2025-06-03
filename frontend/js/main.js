@@ -19,39 +19,45 @@ document.getElementById('category-search-form').addEventListener('submit', funct
 //===============================Your cart drop down list =============================
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Éléments du DOM
     const cartToggle = document.getElementById('cartToggle');
-    const dropdown = cartToggle.closest('.dropdown'); // Plus précis que querySelector
+    const dropdown = cartToggle.closest('.dropdown');
     const cartList = document.getElementById('cartList');
-    const itemCount = document.getElementById('itemCount');
-    const subtotal = document.getElementById('subtotal');
+    // const itemCount = document.getElementById('itemCount');
+    const subtotal = document.getElementById('subtotal'); 
+    const cartQuantity = document.querySelector('.qty'); 
 
-    if (!cartToggle) {
-        console.error("L'élément #cartToggle n'existe pas dans le DOM");
+    
+
+    if (!cartToggle || !cartList || !itemCount || !subtotal || !cartQuantity) {
+        console.error("One or more elements are not found in the DOM");
         return;
     }
 
-    // Données du panier (exemple)
-    const cartItems = [
-        { id: 1, name: "product name goes here", price: 980.00, quantity: 1, img: "/Electronic-Project/frontend/img/product01.png" },
-        { id: 2, name: "product name goes here", price: 980.00, quantity: 3, img: "/Electronic-Project/frontend/img/product02.png" }
-    ];
+    let cartItems = [];
 
-    // Afficher/masquer le dropdown
     cartToggle.addEventListener('click', function(e) {
         e.preventDefault();
-        e.stopPropagation(); // Empêche la propagation immédiate
+        e.stopPropagation();
         dropdown.classList.toggle('open');
+        fetchCartItems();
     });
 
-    // Fermer le panier quand on clique ailleurs
     document.addEventListener('click', function(e) {
         if (!dropdown.contains(e.target) && e.target !== cartToggle) {
             dropdown.classList.remove('open');
         }
     });
 
-    // Remplir le panier
+    function fetchCartItems() {
+        fetch('get_cart.php')
+            .then(response => response.json())
+            .then(data => {
+                cartItems = data;
+                renderCart();
+            })
+            .catch(error => console.error('Error fetching cart items:', error));
+    }
+
     function renderCart() {
         cartList.innerHTML = '';
         let totalItems = 0;
@@ -63,41 +69,53 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const productWidget = document.createElement('div');
             productWidget.className = 'product-widget';
+
             productWidget.innerHTML = `
                 <div class="product-img">
-                    <img src="${item.img}" alt="">
+                    <img src="../${item.image}" alt="${item.name}">
                 </div>
                 <div class="product-body">
                     <h3 class="product-name"><a href="#">${item.name}</a></h3>
                     <h4 class="product-price"><span class="qty">${item.quantity}x</span>$${item.price.toFixed(2)}</h4>
                 </div>
-                <button class="delete" data-id="${item.id}"><i class="fa fa-close"></i></button>
             `;
             cartList.appendChild(productWidget);
         });
 
-        // Mettre à jour le résumé
         itemCount.textContent = `${totalItems} Item(s) selected`;
         subtotal.textContent = `SUBTOTAL: $${totalPrice.toFixed(2)}`;
-        document.querySelector('.qty').textContent = totalItems;
-
-        // Gestion de la suppression
-        document.querySelectorAll('.delete').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const id = parseInt(this.getAttribute('data-id'));
-                const index = cartItems.findIndex(item => item.id === id);
-                if (index !== -1) {
-                    cartItems.splice(index, 1);
-                    renderCart();
-                }
-            });
-        });
+        cartQuantity.textContent = totalItems; // Update the cart quantity in the header
     }
 
-    // Initialisation
-    renderCart();
+    // Event delegation for delete buttons
+    cartList.addEventListener('click', function(e) {
+        if (e.target.classList.contains('delete')) {
+            const productId = e.target.getAttribute('data-id');
+            removeFromCart(productId);
+        }
+    });
+
+    function removeFromCart(productId) {
+        fetch('remove_from_cart.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `product_id=${productId}`
+        })
+        .then(response => {
+            if (response.ok) {
+                fetchCartItems(); // Refresh the cart after removal
+            } else {
+                console.error('Failed to remove item from cart');
+            }
+        })
+        .catch(error => console.error('Error removing item from cart:', error));
+    }
+
+    fetchCartItems(); // Initial fetch of cart items
 });
+
 
 //===============================End Your cart drop down list =============================
 

@@ -109,7 +109,7 @@ if (isset($_SESSION['user_id'])) {
 										<a  class="dropdown-toggle" id="cartToggle">
 											<i class="fa fa-shopping-cart"></i>
 											<span>Your Cart</span>
-											<div class="qty">3</div>
+											<!-- <div class="qty">0</div> -->
 										</a>
 										<div class="cart-dropdown" id="cartDropdown">
 											<div class="cart-list" id="cartList">
@@ -120,7 +120,7 @@ if (isset($_SESSION['user_id'])) {
 												<h5 id="subtotal">SUBTOTAL: $2940.00</h5>
 											</div>
 											<div class="cart-btns">
-												<a href="#">View Cart</a>
+												<a href="/Electronic-Project/frontend/views/cart.php">View Cart</a>
 												<a href="/Electronic-Project/frontend/views/checkout.php">Checkout <i class="fa fa-arrow-circle-right"></i></a>
 											</div>
 										</div>
