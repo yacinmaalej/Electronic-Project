@@ -133,5 +133,19 @@ class Utilisateur {
     $stmt->execute();
 }
 
+// Function to get user details by ID
+public function getUserById($id) {
+    $cnx = new Connexion();
+    $pdo = $cnx->CNXbase();
+    $sql = "SELECT nom, email, address, city, country, zip_code, phone FROM users WHERE id = :id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC); // Return user data as an associative array
+}
+
+
+    
+
 }
 ?>
