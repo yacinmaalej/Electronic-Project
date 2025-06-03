@@ -45,7 +45,6 @@ foreach ($topProducts as $row):
             <div class="product-btns">
 
                 <?php
-								// Check if the user is logged in and is an admin
 								 if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') {
                     echo "<a href='../../Backend/products/edit_product.php?id=" . htmlspecialchars($row['id']) . "' class='btn btn-edit'>
                             <i class='fa fa-edit'></i><span class='tooltipp'></span>
@@ -57,8 +56,12 @@ foreach ($topProducts as $row):
 						?>
                 <button class="add-to-wishlist" data-product-id="<?= $row['id'] ?>">
                     <i class="fa <?= $isFavorited ? 'fa-heart' : 'fa-heart-o' ?>"></i><span class="tooltipp">add to wishlist</span>
-                </button>                
-                <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                </button>   
+              <?php  echo "<a href='product.php?id=" . htmlspecialchars($row['id']) . "' class='btn btn-edit'>
+                            <i class='fa fa-eye'></i><span class='tooltipp'></span>
+                          </a>"; 
+?>            
+                <!-- <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button> -->
             </div>
         </div>
         <div class="add-to-cart">

@@ -6,7 +6,7 @@ session_start();
 require_once('../../Backend/config.php');
 
 if (!isset($_SESSION['user_id'])) {
-    echo json_encode([]); // Return an empty array if the user is not logged in
+    echo json_encode([]); 
     exit();
 }
 
@@ -23,10 +23,9 @@ $stmt = $pdo->prepare("
 $stmt->execute([$userId]);
 $cartItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Check if there are any errors in the SQL execution
 if ($stmt->errorCode() !== '00000') {
     echo json_encode(['error' => 'Database error: ' . implode(', ', $stmt->errorInfo())]);
     exit();
 }
-echo json_encode($cartItems); // Return cart items as JSON
+echo json_encode($cartItems); 
 ?>

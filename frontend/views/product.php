@@ -11,11 +11,11 @@ require_once('../../Backend/products/show.php');
 				<div class="row">
 					<div class="col-md-12">
 						<ul class="breadcrumb-tree">
-							<li><a href="#">Home</a></li>
-							<li><a href="#">All Categories</a></li>
-							<li><a href="#">Accessories</a></li>
-							<li><a href="#">Headphones</a></li>
-							<li class="active">Product name goes here</li>
+							<li><a href="index.php">Home</a></li>
+							<li><a href="store.php">All Categories</a></li>
+							<li><a href="store.php">Accessories</a></li>
+							<li><a href="store.php">Headphones</a></li>
+							<li class="active"><?php echo $product['name'] ?></li>
 						</ul>
 					</div>
 				</div>
@@ -88,7 +88,7 @@ require_once('../../Backend/products/show.php');
 									<i class="fa fa-star"></i>
 									<i class="fa fa-star-o"></i>
 								</div>
-								<a class="review-link" href="#">10 Review(s) | Add your review</a>
+								<!-- <a class="review-link" href="#">10 Review(s) | Add your review</a> -->
 							</div>
 							<div>
 								<h3 class="product-price"><?php echo $product['price'] ?><del class="product-old-price">$990.00</del></h3>
@@ -103,12 +103,12 @@ require_once('../../Backend/products/show.php');
 										<option value="0">X</option>
 									</select>
 								</label> -->
-								<label>
+								<!-- <label>
 									Color
 									<select class="input-select">
 										<option value="0">Red</option>
 									</select>
-								</label>
+								</label> -->
 							</div>
 
 							<div class="add-to-cart">
@@ -120,12 +120,13 @@ require_once('../../Backend/products/show.php');
 										<span class="qty-down">-</span>
 									</div>
 								</div>
-								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+								
+								<a href="cart.php"><button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button></a>
 							</div>
 
 							<ul class="product-btns">
-								<li><a href="#"><i class="fa fa-heart-o"></i> add to wishlist</a></li>
-								<li><a href="#"><i class="fa fa-exchange"></i> add to compare</a></li>
+								<li><a href="wishlist.php"><i class="fa fa-heart-o"></i> add to wishlist</a></li>
+								<!-- <li><a href="#"><i class="fa fa-exchange"></i> add to compare</a></li> -->
 							</ul>
 
 							<ul class="product-links">
@@ -151,8 +152,8 @@ require_once('../../Backend/products/show.php');
 							<!-- product tab nav -->
 							<ul class="tab-nav">
 								<li class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
-								<li><a data-toggle="tab" href="#tab2">Details</a></li>
-								<li><a data-toggle="tab" href="#tab3">Reviews (3)</a></li>
+								<!-- <li><a data-toggle="tab" href="#tab2">Details</a></li> -->
+								<!-- <li><a data-toggle="tab" href="#tab3">Reviews (3)</a></li> -->
 							</ul>
 							<!-- /product tab nav -->
 
@@ -367,20 +368,20 @@ require_once('../../Backend/products/show.php');
 		<!-- /SECTION -->
 
 		<!-- Section -->
-		<div class="section">
+		<!-- <div class="section">
 			<!-- container -->
-			<div class="container">
+			<!-- <div class="container">
 				<!-- row -->
-				<div class="row">
+				<!-- <div class="row"> -->
 
-					<div class="col-md-12">
-						<div class="section-title text-center">
-							<h3 class="title">Related Products</h3>
-						</div>
-					</div>
+					<!-- <div class="col-md-12"> -->
+						<!-- <div class="section-title text-center"> -->
+							<!-- <h3 class="title">Related Products</h3> -->
+						<!-- </div> -->
+					<!-- </div>   -->
 
 					<!-- product -->
-					<div class="col-md-3 col-xs-6">
+					<!-- <div class="col-md-3 col-xs-6">
 						<div class="product">
 							<div class="product-img">
 								<img src="./img/product01.png" alt="">
@@ -404,11 +405,11 @@ require_once('../../Backend/products/show.php');
 								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<!-- /product -->
 
 					<!-- product -->
-					<div class="col-md-3 col-xs-6">
+					<!-- <div class="col-md-3 col-xs-6">
 						<div class="product">
 							<div class="product-img">
 								<img src="./img/product02.png" alt="">
@@ -437,13 +438,13 @@ require_once('../../Backend/products/show.php');
 								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<!-- /product -->
 
-					<div class="clearfix visible-sm visible-xs"></div>
+					<!-- <div class="clearfix visible-sm visible-xs"></div> -->
 
 					<!-- product -->
-					<div class="col-md-3 col-xs-6">
+					<!-- <div class="col-md-3 col-xs-6">
 						<div class="product">
 							<div class="product-img">
 								<img src="./img/product03.png" alt="">
@@ -469,11 +470,11 @@ require_once('../../Backend/products/show.php');
 								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<!-- /product -->
 
 					<!-- product -->
-					<div class="col-md-3 col-xs-6">
+					<!-- <div class="col-md-3 col-xs-6">
 						<div class="product">
 							<div class="product-img">
 								<img src="./img/product04.png" alt="">
@@ -494,7 +495,7 @@ require_once('../../Backend/products/show.php');
 								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<!-- /product -->
 
 				</div>

@@ -2,7 +2,7 @@
 require_once('../verify_session.php');
 require_once('user.class.php');
 if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
-    header("Location: login.php"); // Redirect to login page if not authorized
+    header("Location: login.php"); 
     exit();
 }
 
@@ -13,7 +13,6 @@ if (isset($_SESSION['success'])) {
           </div>';
     unset($_SESSION['success']);
 }
-// Create a new instance of the User class
 $utilisateur = new Utilisateur();
 $users = $utilisateur->listUsers(); 
 ?>

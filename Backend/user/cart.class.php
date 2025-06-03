@@ -9,7 +9,7 @@ class Cart {
         $stmt->bindParam(':user_id', $userId);
         $stmt->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC); // Return cart items as an associative array
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); 
     }
 }
 ?>

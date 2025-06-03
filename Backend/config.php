@@ -12,7 +12,7 @@ class Connexion {
                 $this->username,
                 $this->password
             );
-            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Enable exceptions for errors
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
         } catch (PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
             exit();

@@ -2,7 +2,6 @@
 require_once('user.class.php');
 $us = new Utilisateur();
 
-// Secure Input Data
 $us->id = $_POST['id'] ?? null;
 $us->nom = $_POST['nom'] ?? null;
 $us->email = $_POST['email'] ?? null;

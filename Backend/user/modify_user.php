@@ -1,19 +1,16 @@
 <?php
 require_once('../verify_session.php');
 require_once('user.class.php');
-// Check if the user is logged in and has admin role
 if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
-    header("Location: login.php"); // Redirect to login page if not authorized
+    header("Location: login.php"); 
     exit();
 }
 
-// Create a new instance of the User class
 $utilisateur = new Utilisateur();
 
-// Check if the user ID is provided
 if (isset($_GET['id'])) {
     $utilisateur->id = $_GET['id'];
-    $userCount = $utilisateur->recherche_user(); // Check if user exists
+    $userCount = $utilisateur->recherche_user(); 
 
     if ($userCount == 0) {
         echo "User  not found!";
@@ -21,7 +18,6 @@ if (isset($_GET['id'])) {
     }
     $cnx = new Connexion();
     $pdo = $cnx->CNXbase();
-    // Fetch user details
     $stmt = $pdo->prepare("SELECT * FROM users WHERE id = :id");
     $stmt->bindParam(':id', $utilisateur->id);
     $stmt->execute();
@@ -37,13 +33,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $utilisateur->email = $_POST['email'];
     
     $utilisateur->role = $_POST['role'] ?? $user['role'];
-    // Only update the password if it's provided
     if (!empty($_POST['password'])) {
         $utilisateur->password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     } else {
-        $utilisateur->password = $user['password']; // Keep the existing password
+        $utilisateur->password = $user['password']; 
     }    
-    // Preserve existing values for optional fields
     $utilisateur->address = $_POST['address'] ?? $user['address'];
     $utilisateur->city = $_POST['city'] ?? $user['city'];
     $utilisateur->country = $_POST['country'] ?? $user['country'];

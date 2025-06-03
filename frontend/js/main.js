@@ -1,16 +1,14 @@
 //===============================Header catégories =============================
 
 document.getElementById('category-search-form').addEventListener('submit', function(e) {
-    e.preventDefault(); // Prevent the default form submission
+    e.preventDefault(); 
 
     const categoryId = document.getElementById('category-select').value;
     const searchQuery = document.querySelector('.header-search .input').value; // Get the search query if needed
 
-    // Redirect to store.php with the selected category
     if (categoryId !== "0") {
         window.location.href = `store.php?category=${categoryId}&search=${encodeURIComponent(searchQuery)}`;
     } else {
-        // Redirect to store.php without category filtering
         window.location.href = `store.php?search=${encodeURIComponent(searchQuery)}`;
     }
 });
@@ -22,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const cartToggle = document.getElementById('cartToggle');
     const dropdown = cartToggle.closest('.dropdown');
     const cartList = document.getElementById('cartList');
-    // const itemCount = document.getElementById('itemCount');
     const subtotal = document.getElementById('subtotal'); 
     const cartQuantity = document.querySelector('.qty'); 
 
@@ -84,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         itemCount.textContent = `${totalItems} Item(s) selected`;
         subtotal.textContent = `SUBTOTAL: $${totalPrice.toFixed(2)}`;
-        cartQuantity.textContent = totalItems; // Update the cart quantity in the header
+        cartQuantity.textContent = totalItems; 
     }
 
     // Event delegation for delete buttons
@@ -105,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => {
             if (response.ok) {
-                fetchCartItems(); // Refresh the cart after removal
+                fetchCartItems(); 
             } else {
                 console.error('Failed to remove item from cart');
             }
@@ -113,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => console.error('Error removing item from cart:', error));
     }
 
-    fetchCartItems(); // Initial fetch of cart items
+    fetchCartItems(); 
 });
 
 
@@ -128,7 +125,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const productContainer = document.querySelector('#tab2 .products-slick');
 
     function loadProducts(category = 'all') {
-        // Load products based on the category
         const url = '/Electronic-Project/frontend/views/product_section.php?category=' + category;
 
         fetch(url)
@@ -136,7 +132,6 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(html => {
                 productContainer.innerHTML = html;
 
-                // Set active class if match found
                 tabLinks.forEach(link => {
                     const linkCategory = link.getAttribute('data-category');
                     if (linkCategory === category) {
@@ -149,7 +144,6 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(err => console.error('Fetch error:', err));
     }
 
-    // Handle tab clicks
     tabLinks.forEach(link => {
         link.addEventListener('click', function (e) {
             e.preventDefault();
@@ -158,7 +152,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Load the default category (change 'laptops' to 'all' if needed)
     loadProducts('all');
 });
 
@@ -170,18 +163,15 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener("DOMContentLoaded", function() {
     "use strict";
 
-    // Mobile Nav toggle
     document.querySelector(".menu-toggle > a").addEventListener("click", function(e) {
         e.preventDefault();
         document.getElementById("responsive-nav").classList.toggle("active");
     });
 
-    // Fix cart dropdown from closing
     document.querySelector(".cart-dropdown").addEventListener("click", function(e) {
         e.stopPropagation();
     });
 
-    // Input number handling
     document.querySelectorAll(".input-number").forEach(function(element) {
         let input = element.querySelector("input[type='number']");
         let up = element.querySelector(".qty-up");
@@ -200,7 +190,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    // Price Slider using noUiSlider
     let priceSlider = document.getElementById("price-slider");
     let priceInputMin = document.getElementById("price-min");
     let priceInputMax = document.getElementById("price-max");
@@ -284,19 +273,16 @@ function isProductPage() {
 
     // Attacher les événements seulement sur la page produit
     if (isProductPage()) {
-        // Écouteurs pour les filtres
         document.querySelectorAll(".checkbox-filter input").forEach(input => {
             input.addEventListener("change", loadProducts);
         });
 
-        // Écouteurs pour les prix (avec vérification d'existence)
         const priceMin = document.getElementById("price-min");
         const priceMax = document.getElementById("price-max");
         
         if (priceMin) priceMin.addEventListener("change", loadProducts);
         if (priceMax) priceMax.addEventListener("change", loadProducts);
 
-        // Chargement initial
         window.addEventListener('load', loadProducts);
     }
 

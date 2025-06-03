@@ -9,10 +9,9 @@ if (!isset($_SESSION['user_id'])) {
 
 $utilisateur = new Utilisateur();
 
-// Check if the user ID is provided
 if (isset($_GET['id'])) {
     $utilisateur->id = $_GET['id'];
-    $userCount = $utilisateur->recherche_user(); // Check if user exists
+    $userCount = $utilisateur->recherche_user(); 
 
     if ($userCount == 0) {
         echo "User  not found!";
@@ -31,30 +30,25 @@ if (isset($_GET['id'])) {
     exit();
 }
 
-// Process the form when submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $utilisateur->id = $_POST['id'];
     $utilisateur->nom = $_POST['name'];
     $utilisateur->email = $_POST['email'];
     
-    // Preserve the existing role if not changed
-    $utilisateur->role = $_POST['role'] ?? $user['role']; // Keep existing role if not provided
+    $utilisateur->role = $_POST['role'] ?? $user['role']; 
 
-    // Only update the password if it's provided
     if (!empty($_POST['password'])) {
         $utilisateur->password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     } else {
-        $utilisateur->password = $user['password']; // Keep the existing password
+        $utilisateur->password = $user['password'];
     }    
       
-    // Preserve existing values for optional fields
     $utilisateur->address = $_POST['address'] ?? $user['address'];
     $utilisateur->city = $_POST['city'] ?? $user['city'];
     $utilisateur->country = $_POST['country'] ?? $user['country'];
     $utilisateur->zip_code = $_POST['zip_code'] ?? $user['zip_code'];
     $utilisateur->phone = $_POST['phone'] ?? $user['phone'];
 
-    // Update the user in the database
     $utilisateur->modify_user($utilisateur->id);
     header("Location: ../../frontend/views/index.php");
     exit();

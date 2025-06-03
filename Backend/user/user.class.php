@@ -11,16 +11,13 @@ class Utilisateur {
     public $zip_code;
     public $phone;
 
-    // Function to insert a user into the database
     public function insertUser () {
-    require_once('../config.php'); // Include database connection class
+    require_once('../config.php'); 
     $cnx = new Connexion();
     $pdo = $cnx->CNXbase();
 
-    // Hash the password before storing it
     $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
 
-    // Use a prepared statement with placeholders
     $sql = "INSERT INTO users (nom, email, password, address, city, country, zip_code, phone)
         VALUES (:nom, :email, :password, :address, :city, :country, :zip_code, :phone)";
     $stmt = $pdo->prepare($sql);
@@ -42,23 +39,20 @@ class Utilisateur {
 }
 
 
-    // Function to search for a user by ID
     public function recherche_user() {
         require_once('../config.php');
         $cnx = new Connexion();
         $pdo = $cnx->CNXbase();
     
-        // Corrected SQL Query
         $sql = "SELECT count(*) FROM users WHERE id = :id";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':id', $this->id);
         $stmt->execute();
     
-        $count = $stmt->fetchColumn(); // Fetch the count value
+        $count = $stmt->fetchColumn(); 
         return $count;
     }
 
-    // Function to list all users
     public function listUsers() {
         require_once('../config.php');
         $cnx = new Connexion();
@@ -74,7 +68,6 @@ class Utilisateur {
         }
     }
 
-    // Function to delete a user by ID
     public function delete_user($id) {
         require_once('../config.php');
         $cnx = new Connexion();
@@ -88,13 +81,11 @@ class Utilisateur {
         }
             
 
-    // Function to modify a user's details
     public function modify_user($id) {
     require_once('../config.php');
     $cnx = new Connexion();
     $pdo = $cnx->CNXbase();
 
-    // Prepare the SQL statement
     $sql = "UPDATE users 
         SET nom = :nom, 
             email = :email, 
@@ -105,16 +96,14 @@ class Utilisateur {
             zip_code = :zip_code, 
             phone = :phone";
 
-    // Only include password in the update if it's provided
     if (!empty($this->password)) {
-        $sql .= ", password = :password"; // Append password update
+        $sql .= ", password = :password"; 
     }
 
     $sql .= " WHERE id = :id"; 
 
     $stmt = $pdo->prepare($sql);
     
-    // Bind parameters
     $stmt->bindParam(':id', $id);
     $stmt->bindParam(':nom', $this->nom);
     $stmt->bindParam(':email', $this->email);
@@ -125,7 +114,6 @@ class Utilisateur {
     $stmt->bindParam(':zip_code', $this->zip_code);
     $stmt->bindParam(':phone', $this->phone);
 
-    // Bind password only if it's provided
     if (!empty($this->password)) {
         $stmt->bindParam(':password', $this->password);
     }
@@ -133,7 +121,6 @@ class Utilisateur {
     $stmt->execute();
 }
 
-// Function to get user details by ID
 public function getUserById($id) {
     $cnx = new Connexion();
     $pdo = $cnx->CNXbase();
@@ -141,7 +128,7 @@ public function getUserById($id) {
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':id', $id);
     $stmt->execute();
-    return $stmt->fetch(PDO::FETCH_ASSOC); // Return user data as an associative array
+    return $stmt->fetch(PDO::FETCH_ASSOC); 
 }
 
 

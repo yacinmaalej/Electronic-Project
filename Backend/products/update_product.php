@@ -14,31 +14,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cnx = new Connexion();
     $pdo = $cnx->CNXbase();
 
-    // Initialize the image variable
     $image = null;
 
-    // Check if a new image is uploaded
     if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
         $fileTemp = $_FILES['image']['tmp_name'];
         $fileName = $_FILES['image']['name'];
-        $targetPath = __DIR__ . '/../../frontend/uploads/' . $fileName; // Use __DIR__ for absolute path
+        $targetPath = __DIR__ . '/../../frontend/uploads/' . $fileName; 
 
         if (move_uploaded_file($fileTemp, $targetPath)) {
-            $image = 'uploads/' . $fileName; // Store the relative path
+            $image = 'uploads/' . $fileName; 
         } else {
             echo "Error uploading the photo.";
             exit();
         }
     } else {
-        // Fetch the current image from the database
         $stmt = $pdo->prepare("SELECT image FROM products WHERE id = :id");
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         $currentProduct = $stmt->fetch(PDO::FETCH_ASSOC);
-        $image = $currentProduct['image']; // Keep the existing image
+        $image = $currentProduct['image']; 
     }
 
-    // Prepare the SQL statement
     $sql = "UPDATE products SET 
             name = :name, 
             description = :description, 
@@ -60,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bindParam(':stock', $stock);
 
     if ($stmt->execute()) {
-        header("Location: ../../frontend/views/store.php"); // Redirection vers la liste des produits
+        header("Location: ../../frontend/views/store.php"); 
         exit();
     } else {
         echo "Erreur lors de la modification.";
